@@ -1,0 +1,8 @@
+{
+  "poc": "A",
+  "technology": "OPA + Rego",
+  "opa_image": "openpolicyagent/opa:1.18.2",
+  "dev_users": 50000,
+  "dev_resources": 20000,
+  "generator_seed": 42
+}

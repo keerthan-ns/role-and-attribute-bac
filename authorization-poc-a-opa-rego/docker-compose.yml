@@ -1,0 +1,20 @@
+services:
+  opa:
+    image: openpolicyagent/opa:1.18.2
+    command:
+      - run
+      - --server
+      - --addr=0.0.0.0:8181
+      - --log-level=error
+      - /policies
+      - /data
+    ports:
+      - "8181:8181"
+    volumes:
+      - ./opa/policies:/policies:ro
+      - ./opa/data:/data:ro
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "-", "http://127.0.0.1:8181/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 10

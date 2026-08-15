@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+opa/data/large-data.json
+benchmark-results/
+.venv/
+.env

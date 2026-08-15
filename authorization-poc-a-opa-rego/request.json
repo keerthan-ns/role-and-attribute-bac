@@ -1,0 +1,29 @@
+{
+  "input": {
+    "subject": {
+      "id": "user-demo",
+      "roles": [
+        "admin"
+      ],
+      "org_id": "org-0001",
+      "department_id": "dept-00001",
+      "clearance": 5,
+      "event_zone": "ZONE-A",
+      "location": "DELHI"
+    },
+    "resource": {
+      "id": "resource-demo",
+      "type": "document",
+      "org_id": "org-0001",
+      "department_id": "dept-00002",
+      "classification": 4,
+      "event_zone": "ZONE-C",
+      "allowed_location": null
+    },
+    "action": "read",
+    "context": {
+      "location": "DELHI",
+      "event_id": "national-event-2026"
+    }
+  }
+}
