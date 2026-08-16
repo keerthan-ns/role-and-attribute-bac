@@ -1,0 +1,15 @@
+{
+  "project": "authorization-poc-b-phase2-corrected",
+  "dataset_source": "POC-B Phase 1",
+  "dataset_seed": 42,
+  "phase1_user_count": 50000,
+  "phase1_resource_count": 20000,
+  "phase1_tuple_count": 365596,
+  "phase1_attributes_file": "data/attributes.json",
+  "phase1_raw_tuple_file": "data/original-phase1-tuples.jsonl",
+  "corrected_tuple_file": "data/tuples.jsonl",
+  "openfga_version": "v1.18.1",
+  "postgres_version": "17",
+  "openfga_cli_reference": "v0.7.20",
+  "note": "Same logical Phase-1 dataset; role-derived permission tuple encoding corrected to role#member usersets."
+}

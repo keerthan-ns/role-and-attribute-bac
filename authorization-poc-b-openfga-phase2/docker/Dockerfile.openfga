@@ -1,0 +1,5 @@
+FROM openfga/openfga:v1.18.1
+LABEL org.opencontainers.image.title="authorization-poc-b-phase2-openfga"
+LABEL org.opencontainers.image.description="Fresh OpenFGA image for corrected POC-B Phase 2"
+EXPOSE 8080 8081 3000
+HEALTHCHECK --interval=5s --timeout=3s --retries=20 CMD wget -q -O - http://127.0.0.1:8080/health || exit 1

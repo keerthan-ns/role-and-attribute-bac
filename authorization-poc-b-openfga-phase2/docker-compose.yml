@@ -1,0 +1,58 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: pocb2-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: openfga
+    ports:
+      - "5437:5432"
+    volumes:
+      - pocb2_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d openfga"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  migrate:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.openfga
+    image: authorization-poc-b-phase2-openfga:1.18.1
+    container_name: pocb2-migrate
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: ["migrate"]
+    environment:
+      OPENFGA_DATASTORE_ENGINE: postgres
+      OPENFGA_DATASTORE_URI: postgres://postgres:password@postgres:5432/openfga?sslmode=disable
+
+  openfga:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.openfga
+    image: authorization-poc-b-phase2-openfga:1.18.1
+    container_name: pocb2-openfga
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    command: ["run"]
+    environment:
+      OPENFGA_DATASTORE_ENGINE: postgres
+      OPENFGA_DATASTORE_URI: postgres://postgres:password@postgres:5432/openfga?sslmode=disable
+      OPENFGA_LOG_FORMAT: json
+      OPENFGA_PLAYGROUND_ENABLED: "true"
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+      - "3000:3000"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "-", "http://127.0.0.1:8080/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+volumes:
+  pocb2_postgres_data:
