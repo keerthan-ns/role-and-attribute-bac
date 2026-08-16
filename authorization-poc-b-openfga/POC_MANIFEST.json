@@ -1,0 +1,11 @@
+{
+  "poc": "B",
+  "technology": "OpenFGA",
+  "datastore": "PostgreSQL 17",
+  "seed": 42,
+  "dev_users": 50000,
+  "dev_resources": 20000,
+  "tuple_count": 365596,
+  "model_schema": "1.1",
+  "fix": "Role-based resource tuples now use role:<name>#member; bootstrap fails fast on tuple-write errors."
+}

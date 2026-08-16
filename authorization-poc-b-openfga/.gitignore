@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+data/large-tuples.jsonl
+data/large-attributes.json
+benchmark-results/
+.venv/

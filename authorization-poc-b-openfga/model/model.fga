@@ -1,0 +1,55 @@
+model
+  schema 1.1
+
+type user
+
+type organization
+  relations
+    define member: [user]
+    define admin: [user]
+    define can_read: member or admin
+    define can_write: admin
+
+type department
+  relations
+    define organization: [organization]
+    define member: [user]
+    define admin: [user]
+    define can_read: member or admin
+    define can_write: admin
+
+type team
+  relations
+    define department: [department]
+    define member: [user]
+    define lead: [user]
+    define can_read: member or lead
+    define can_write: lead
+
+type role
+  relations
+    define member: [user]
+    define can_read: member
+    define can_write: member
+    define can_admin: member
+
+type application
+  relations
+    define organization: [organization]
+    define member: [user]
+    define admin: [user, role#member]
+    define can_read: member or admin
+    define can_write: admin
+
+type resource
+  relations
+    define application: [application]
+    define organization: [organization]
+    define department: [department]
+    define team: [team]
+    define viewer: [user, role#member] or member from team or member from department or member from organization
+    define editor: [user, role#member] or lead from team
+    define admin: [user, organization#admin, role#member]
+    define can_read: viewer or editor or admin
+    define can_write: editor or admin
+    define can_admin: admin

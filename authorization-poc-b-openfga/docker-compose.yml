@@ -1,0 +1,42 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: pocb-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: openfga
+    ports:
+      - "5436:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d openfga"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  migrate:
+    image: openfga/openfga:latest
+    container_name: pocb-migrate
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: >
+      migrate --datastore-engine postgres
+      --datastore-uri postgres://postgres:password@postgres:5432/openfga?sslmode=disable
+
+  openfga:
+    image: openfga/openfga:latest
+    container_name: pocb-openfga
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    command: >
+      run --datastore-engine postgres
+      --datastore-uri postgres://postgres:password@postgres:5432/openfga?sslmode=disable
+      --playground-enabled=true
+    environment:
+      OPENFGA_LOG_FORMAT: json
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+      - "3000:3000"
