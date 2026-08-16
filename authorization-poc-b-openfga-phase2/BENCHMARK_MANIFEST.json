@@ -1,0 +1,26 @@
+{
+  "project": "POC-B Phase 2",
+  "benchmark_harness": "benchmark.py",
+  "scenarios": [
+    "check",
+    "condition",
+    "contextual",
+    "batch-check",
+    "list-objects",
+    "consistency-min",
+    "consistency-high"
+  ],
+  "default_requests": 10000,
+  "default_warmup": 500,
+  "default_concurrency": [
+    1,
+    4,
+    8,
+    16,
+    32,
+    64,
+    128,
+    256
+  ],
+  "dataset_tuple_count": 365596
+}

@@ -1,0 +1,23 @@
+{
+  "scenario": "check",
+  "requests": 10000,
+  "http_requests": 10000,
+  "concurrency": 4,
+  "batch_size": null,
+  "successful_http_requests": 10000,
+  "errors": 0,
+  "wall_seconds": 25.769415,
+  "http_requests_per_second": 388.057,
+  "logical_checks_per_second": 388.057,
+  "avg_ms": 10.1743,
+  "p50_ms": 8.0526,
+  "p95_ms": 24.9336,
+  "p99_ms": 30.5466,
+  "p99_9_ms": 47.4073,
+  "max_ms": 71.8235,
+  "allowed_true": 10000,
+  "allowed_false": 0,
+  "base_url": "http://localhost:8080",
+  "store_id": "01M0579RRBFVPR8Q3Z3SE940V7",
+  "model_id": "01M057E1FZFHKX59XT9RAV44XC"
+}
