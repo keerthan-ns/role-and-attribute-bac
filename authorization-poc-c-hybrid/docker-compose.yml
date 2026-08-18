@@ -1,0 +1,64 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: pocc-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: openfga
+    ports: ["5438:5432"]
+    volumes: ["pocc_postgres_data:/var/lib/postgresql/data"]
+    networks: [pocc]
+    healthcheck:
+      test: ["CMD-SHELL","pg_isready -U postgres -d openfga"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  migrate:
+    build: {context: ., dockerfile: docker/Dockerfile.openfga}
+    image: authorization-poc-c-openfga:1.18.1
+    container_name: pocc-migrate
+    depends_on: {postgres: {condition: service_healthy}}
+    command: ["migrate"]
+    environment:
+      OPENFGA_DATASTORE_ENGINE: postgres
+      OPENFGA_DATASTORE_URI: postgres://postgres:password@postgres:5432/openfga?sslmode=disable
+    networks: [pocc]
+  openfga:
+    build: {context: ., dockerfile: docker/Dockerfile.openfga}
+    image: authorization-poc-c-openfga:1.18.1
+    container_name: pocc-openfga
+    depends_on: {migrate: {condition: service_completed_successfully}}
+    command: ["run"]
+    environment:
+      OPENFGA_DATASTORE_ENGINE: postgres
+      OPENFGA_DATASTORE_URI: postgres://postgres:password@postgres:5432/openfga?sslmode=disable
+      OPENFGA_LOG_FORMAT: json
+      OPENFGA_PLAYGROUND_ENABLED: "true"
+    ports: ["8091:8080","8092:8081","3001:3000"]
+    networks: [pocc]
+  opa:
+    build: {context: ., dockerfile: docker/Dockerfile.opa}
+    image: authorization-poc-c-opa:1.18.2
+    container_name: pocc-opa
+    ports: ["8182:8181"]
+    networks: [pocc]
+  gateway:
+    build: {context: ., dockerfile: gateway/Dockerfile}
+    image: authorization-poc-c-gateway:1.0
+    container_name: pocc-gateway
+    depends_on:
+      openfga: {condition: service_started}
+      opa: {condition: service_started}
+    environment:
+      FGA_URL: http://openfga:8080
+      OPA_URL: http://opa:8181
+      ATTRIBUTES_FILE: /data/attributes.json
+    ports: ["8090:8090"]
+    networks: [pocc]
+networks:
+  pocc:
+    name: authorization-poc-c-network
+volumes:
+  pocc_postgres_data:
+    name: authorization-poc-c-postgres-data

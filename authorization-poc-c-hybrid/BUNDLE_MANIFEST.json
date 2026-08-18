@@ -1,0 +1,10 @@
+{
+  "project": "authorization-poc-c-hybrid-fresh",
+  "openfga": "v1.18.1",
+  "opa": "1.18.2",
+  "postgres": "17",
+  "tuple_count": 365596,
+  "seed": 42,
+  "isolated": true,
+  "bootstrap_script": "scripts/bootstrap.ps1"
+}
