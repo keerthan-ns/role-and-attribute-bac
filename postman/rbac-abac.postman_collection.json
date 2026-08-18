@@ -1561,7 +1561,639 @@
     },
     {
       "name": "hybrid-OPA+openFGA",
-      "item": []
+      "item": [
+        {
+          "name": "00 - OpenFGA Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{poc-c-baseUrl}}/healthz",
+              "host": [
+                "{{poc-c-baseUrl}}"
+              ],
+              "path": [
+                "healthz"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "00 - OpenFGA Health",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{poc-c-baseUrl}}/healthz",
+                  "host": [
+                    "{{poc-c-baseUrl}}"
+                  ],
+                  "path": [
+                    "healthz"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 17 Aug 2026 01:52:43 GMT"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "21"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"SERVING\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "01 - OPA Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{opaBaseUrl}}/health",
+              "host": [
+                "{{opaBaseUrl}}"
+              ],
+              "path": [
+                "health"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "01 - OPA Health",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{opaBaseUrl}}/health",
+                  "host": [
+                    "{{opaBaseUrl}}"
+                  ],
+                  "path": [
+                    "health"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 17 Aug 2026 01:52:50 GMT"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "3"
+                }
+              ],
+              "cookie": [],
+              "body": "{}"
+            }
+          ]
+        },
+        {
+          "name": "02 - Gateway Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{gatewayBaseUrl}}/health",
+              "host": [
+                "{{gatewayBaseUrl}}"
+              ],
+              "path": [
+                "health"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "02 - Gateway Health",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gatewayBaseUrl}}/health",
+                  "host": [
+                    "{{gatewayBaseUrl}}"
+                  ],
+                  "path": [
+                    "health"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "date",
+                  "value": "Mon, 17 Aug 2026 01:53:01 GMT"
+                },
+                {
+                  "key": "server",
+                  "value": "uvicorn"
+                },
+                {
+                  "key": "content-length",
+                  "value": "40"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"ok\",\n    \"attributes_loaded\": true\n}"
+            }
+          ]
+        },
+        {
+          "name": "03 - Create OpenFGA Store",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('2xx',()=>pm.expect(pm.response.code).to.be.within(200,299));",
+                  "const j=pm.response.json(); pm.environment.set('c-storeId',j.id);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"poc-c-hybrid\"\n}"
+            },
+            "url": {
+              "raw": "{{poc-c-baseUrl}}/stores",
+              "host": [
+                "{{poc-c-baseUrl}}"
+              ],
+              "path": [
+                "stores"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "03 - Create OpenFGA Store",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"poc-c-hybrid\"\n}"
+                },
+                "url": {
+                  "raw": "{{poc-c-baseUrl}}/stores",
+                  "host": [
+                    "{{poc-c-baseUrl}}"
+                  ],
+                  "path": [
+                    "stores"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "X-Http-Code",
+                  "value": "201"
+                },
+                {
+                  "key": "X-Request-Id",
+                  "value": "9365a014-f7ee-443f-a21b-a285dbfb0ef0"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 17 Aug 2026 01:53:22 GMT"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "143"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": \"01M06PRS41V8PDB99CARJQ4YG4\",\n    \"name\": \"poc-c-hybrid\",\n    \"created_at\": \"2026-08-17T01:53:22.563525Z\",\n    \"updated_at\": \"2026-08-17T01:53:22.563525Z\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "04 - Create Phase-1 OpenFGA Model",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('2xx',()=>pm.expect(pm.response.code).to.be.within(200,299));",
+                  "const j=pm.response.json(); pm.environment.set('c-modelId',j.authorization_model_id);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"schema_version\": \"1.1\",\n  \"type_definitions\": [\n    {\n      \"type\": \"user\"\n    },\n    {\n      \"type\": \"organization\",\n      \"relations\": {\n        \"member\": {\n          \"this\": {}\n        },\n        \"admin\": {\n          \"this\": {}\n        },\n        \"can_read\": {\n          \"union\": {\n            \"child\": [\n              {\n                \"computedUserset\": {\n                  \"relation\": \"member\"\n                }\n              },\n              {\n                \"computedUserset\": {\n                  \"relation\": \"admin\"\n                }\n              }\n            ]\n          }\n        },\n        \"can_write\": {\n          \"computedUserset\": {\n            \"relation\": \"admin\"\n          }\n        }\n      },\n      \"metadata\": {\n        \"relations\": {\n          \"member\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"user\"\n              }\n            ]\n          },\n          \"admin\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"user\"\n              }\n            ]\n          },\n          \"can_read\": {\n            \"directly_related_user_types\": []\n          },\n          \"can_write\": {\n            \"directly_related_user_types\": []\n          }\n        }\n      }\n    },\n    {\n      \"type\": \"department\",\n      \"relations\": {\n        \"organization\": {\n          \"this\": {}\n        },\n        \"member\": {\n          \"this\": {}\n        },\n        \"admin\": {\n          \"this\": {}\n        },\n        \"can_read\": {\n          \"union\": {\n            \"child\": [\n              {\n                \"computedUserset\": {\n                  \"relation\": \"member\"\n                }\n              },\n              {\n                \"computedUserset\": {\n                  \"relation\": \"admin\"\n                }\n              }\n            ]\n          }\n        },\n        \"can_write\": {\n          \"computedUserset\": {\n            \"relation\": \"admin\"\n          }\n        }\n      },\n      \"metadata\": {\n        \"relations\": {\n          \"organization\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"organization\"\n              }\n            ]\n          },\n          \"member\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"user\"\n              }\n            ]\n          },\n          \"admin\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"user\"\n              }\n            ]\n          },\n          \"can_read\": {\n            \"directly_related_user_types\": []\n          },\n          \"can_write\": {\n            \"directly_related_user_types\": []\n          }\n        }\n      }\n    },\n    {\n      \"type\": \"team\",\n      \"relations\": {\n        \"department\": {\n          \"this\": {}\n        },\n        \"member\": {\n          \"this\": {}\n        },\n        \"lead\": {\n          \"this\": {}\n        },\n        \"can_read\": {\n          \"union\": {\n            \"child\": [\n              {\n                \"computedUserset\": {\n                  \"relation\": \"member\"\n                }\n              },\n              {\n                \"computedUserset\": {\n                  \"relation\": \"lead\"\n                }\n              }\n            ]\n          }\n        },\n        \"can_write\": {\n          \"computedUserset\": {\n            \"relation\": \"lead\"\n          }\n        }\n      },\n      \"metadata\": {\n        \"relations\": {\n          \"department\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"department\"\n              }\n            ]\n          },\n          \"member\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"user\"\n              }\n            ]\n          },\n          \"lead\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"user\"\n              }\n            ]\n          },\n          \"can_read\": {\n            \"directly_related_user_types\": []\n          },\n          \"can_write\": {\n            \"directly_related_user_types\": []\n          }\n        }\n      }\n    },\n    {\n      \"type\": \"role\",\n      \"relations\": {\n        \"member\": {\n          \"this\": {}\n        }\n      },\n      \"metadata\": {\n        \"relations\": {\n          \"member\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"user\"\n              }\n            ]\n          }\n        }\n      }\n    },\n    {\n      \"type\": \"application\",\n      \"relations\": {\n        \"organization\": {\n          \"this\": {}\n        },\n        \"member\": {\n          \"this\": {}\n        },\n        \"admin\": {\n          \"this\": {}\n        },\n        \"can_read\": {\n          \"union\": {\n            \"child\": [\n              {\n                \"computedUserset\": {\n                  \"relation\": \"member\"\n                }\n              },\n              {\n                \"computedUserset\": {\n                  \"relation\": \"admin\"\n                }\n              }\n            ]\n          }\n        },\n        \"can_write\": {\n          \"computedUserset\": {\n            \"relation\": \"admin\"\n          }\n        }\n      },\n      \"metadata\": {\n        \"relations\": {\n          \"organization\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"organization\"\n              }\n            ]\n          },\n          \"member\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"user\"\n              }\n            ]\n          },\n          \"admin\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"user\"\n              },\n              {\n                \"type\": \"role\",\n                \"relation\": \"member\"\n              }\n            ]\n          },\n          \"can_read\": {\n            \"directly_related_user_types\": []\n          },\n          \"can_write\": {\n            \"directly_related_user_types\": []\n          }\n        }\n      }\n    },\n    {\n      \"type\": \"resource\",\n      \"relations\": {\n        \"application\": {\n          \"this\": {}\n        },\n        \"organization\": {\n          \"this\": {}\n        },\n        \"department\": {\n          \"this\": {}\n        },\n        \"team\": {\n          \"this\": {}\n        },\n        \"viewer\": {\n          \"union\": {\n            \"child\": [\n              {\n                \"this\": {}\n              },\n              {\n                \"tupleToUserset\": {\n                  \"tupleset\": {\n                    \"relation\": \"team\"\n                  },\n                  \"computedUserset\": {\n                    \"relation\": \"member\"\n                  }\n                }\n              },\n              {\n                \"tupleToUserset\": {\n                  \"tupleset\": {\n                    \"relation\": \"department\"\n                  },\n                  \"computedUserset\": {\n                    \"relation\": \"member\"\n                  }\n                }\n              },\n              {\n                \"tupleToUserset\": {\n                  \"tupleset\": {\n                    \"relation\": \"organization\"\n                  },\n                  \"computedUserset\": {\n                    \"relation\": \"member\"\n                  }\n                }\n              }\n            ]\n          }\n        },\n        \"editor\": {\n          \"union\": {\n            \"child\": [\n              {\n                \"this\": {}\n              },\n              {\n                \"tupleToUserset\": {\n                  \"tupleset\": {\n                    \"relation\": \"team\"\n                  },\n                  \"computedUserset\": {\n                    \"relation\": \"member\"\n                  }\n                }\n              },\n              {\n                \"tupleToUserset\": {\n                  \"tupleset\": {\n                    \"relation\": \"department\"\n                  },\n                  \"computedUserset\": {\n                    \"relation\": \"member\"\n                  }\n                }\n              },\n              {\n                \"tupleToUserset\": {\n                  \"tupleset\": {\n                    \"relation\": \"organization\"\n                  },\n                  \"computedUserset\": {\n                    \"relation\": \"admin\"\n                  }\n                }\n              }\n            ]\n          }\n        },\n        \"admin\": {\n          \"union\": {\n            \"child\": [\n              {\n                \"this\": {}\n              },\n              {\n                \"tupleToUserset\": {\n                  \"tupleset\": {\n                    \"relation\": \"organization\"\n                  },\n                  \"computedUserset\": {\n                    \"relation\": \"admin\"\n                  }\n                }\n              }\n            ]\n          }\n        },\n        \"can_read\": {\n          \"union\": {\n            \"child\": [\n              {\n                \"computedUserset\": {\n                  \"relation\": \"viewer\"\n                }\n              },\n              {\n                \"computedUserset\": {\n                  \"relation\": \"editor\"\n                }\n              },\n              {\n                \"computedUserset\": {\n                  \"relation\": \"admin\"\n                }\n              }\n            ]\n          }\n        },\n        \"can_write\": {\n          \"union\": {\n            \"child\": [\n              {\n                \"computedUserset\": {\n                  \"relation\": \"editor\"\n                }\n              },\n              {\n                \"computedUserset\": {\n                  \"relation\": \"admin\"\n                }\n              }\n            ]\n          }\n        },\n        \"can_admin\": {\n          \"computedUserset\": {\n            \"relation\": \"admin\"\n          }\n        }\n      },\n      \"metadata\": {\n        \"relations\": {\n          \"application\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"application\"\n              }\n            ]\n          },\n          \"organization\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"organization\"\n              }\n            ]\n          },\n          \"department\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"department\"\n              }\n            ]\n          },\n          \"team\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"team\"\n              }\n            ]\n          },\n          \"viewer\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"user\"\n              },\n              {\n                \"type\": \"role\",\n                \"relation\": \"member\"\n              }\n            ]\n          },\n          \"editor\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"user\"\n              },\n              {\n                \"type\": \"role\",\n                \"relation\": \"member\"\n              }\n            ]\n          },\n          \"admin\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"user\"\n              },\n              {\n                \"type\": \"role\",\n                \"relation\": \"member\"\n              }\n            ]\n          },\n          \"can_read\": {\n            \"directly_related_user_types\": []\n          },\n          \"can_write\": {\n            \"directly_related_user_types\": []\n          },\n          \"can_admin\": {\n            \"directly_related_user_types\": []\n          }\n        }\n      }\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{poc-c-baseUrl}}/stores/{{c-storeId}}/authorization-models",
+              "host": [
+                "{{poc-c-baseUrl}}"
+              ],
+              "path": [
+                "stores",
+                "{{c-storeId}}",
+                "authorization-models"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "04 - Create Phase-1 OpenFGA Model",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schema_version\": \"1.1\",\n  \"type_definitions\": [\n    {\n      \"type\": \"user\"\n    },\n    {\n      \"type\": \"organization\",\n      \"relations\": {\n        \"member\": {\n          \"this\": {}\n        },\n        \"admin\": {\n          \"this\": {}\n        },\n        \"can_read\": {\n          \"union\": {\n            \"child\": [\n              {\n                \"computedUserset\": {\n                  \"relation\": \"member\"\n                }\n              },\n              {\n                \"computedUserset\": {\n                  \"relation\": \"admin\"\n                }\n              }\n            ]\n          }\n        },\n        \"can_write\": {\n          \"computedUserset\": {\n            \"relation\": \"admin\"\n          }\n        }\n      },\n      \"metadata\": {\n        \"relations\": {\n          \"member\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"user\"\n              }\n            ]\n          },\n          \"admin\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"user\"\n              }\n            ]\n          },\n          \"can_read\": {\n            \"directly_related_user_types\": []\n          },\n          \"can_write\": {\n            \"directly_related_user_types\": []\n          }\n        }\n      }\n    },\n    {\n      \"type\": \"department\",\n      \"relations\": {\n        \"organization\": {\n          \"this\": {}\n        },\n        \"member\": {\n          \"this\": {}\n        },\n        \"admin\": {\n          \"this\": {}\n        },\n        \"can_read\": {\n          \"union\": {\n            \"child\": [\n              {\n                \"computedUserset\": {\n                  \"relation\": \"member\"\n                }\n              },\n              {\n                \"computedUserset\": {\n                  \"relation\": \"admin\"\n                }\n              }\n            ]\n          }\n        },\n        \"can_write\": {\n          \"computedUserset\": {\n            \"relation\": \"admin\"\n          }\n        }\n      },\n      \"metadata\": {\n        \"relations\": {\n          \"organization\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"organization\"\n              }\n            ]\n          },\n          \"member\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"user\"\n              }\n            ]\n          },\n          \"admin\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"user\"\n              }\n            ]\n          },\n          \"can_read\": {\n            \"directly_related_user_types\": []\n          },\n          \"can_write\": {\n            \"directly_related_user_types\": []\n          }\n        }\n      }\n    },\n    {\n      \"type\": \"team\",\n      \"relations\": {\n        \"department\": {\n          \"this\": {}\n        },\n        \"member\": {\n          \"this\": {}\n        },\n        \"lead\": {\n          \"this\": {}\n        },\n        \"can_read\": {\n          \"union\": {\n            \"child\": [\n              {\n                \"computedUserset\": {\n                  \"relation\": \"member\"\n                }\n              },\n              {\n                \"computedUserset\": {\n                  \"relation\": \"lead\"\n                }\n              }\n            ]\n          }\n        },\n        \"can_write\": {\n          \"computedUserset\": {\n            \"relation\": \"lead\"\n          }\n        }\n      },\n      \"metadata\": {\n        \"relations\": {\n          \"department\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"department\"\n              }\n            ]\n          },\n          \"member\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"user\"\n              }\n            ]\n          },\n          \"lead\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"user\"\n              }\n            ]\n          },\n          \"can_read\": {\n            \"directly_related_user_types\": []\n          },\n          \"can_write\": {\n            \"directly_related_user_types\": []\n          }\n        }\n      }\n    },\n    {\n      \"type\": \"role\",\n      \"relations\": {\n        \"member\": {\n          \"this\": {}\n        }\n      },\n      \"metadata\": {\n        \"relations\": {\n          \"member\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"user\"\n              }\n            ]\n          }\n        }\n      }\n    },\n    {\n      \"type\": \"application\",\n      \"relations\": {\n        \"organization\": {\n          \"this\": {}\n        },\n        \"member\": {\n          \"this\": {}\n        },\n        \"admin\": {\n          \"this\": {}\n        },\n        \"can_read\": {\n          \"union\": {\n            \"child\": [\n              {\n                \"computedUserset\": {\n                  \"relation\": \"member\"\n                }\n              },\n              {\n                \"computedUserset\": {\n                  \"relation\": \"admin\"\n                }\n              }\n            ]\n          }\n        },\n        \"can_write\": {\n          \"computedUserset\": {\n            \"relation\": \"admin\"\n          }\n        }\n      },\n      \"metadata\": {\n        \"relations\": {\n          \"organization\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"organization\"\n              }\n            ]\n          },\n          \"member\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"user\"\n              }\n            ]\n          },\n          \"admin\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"user\"\n              },\n              {\n                \"type\": \"role\",\n                \"relation\": \"member\"\n              }\n            ]\n          },\n          \"can_read\": {\n            \"directly_related_user_types\": []\n          },\n          \"can_write\": {\n            \"directly_related_user_types\": []\n          }\n        }\n      }\n    },\n    {\n      \"type\": \"resource\",\n      \"relations\": {\n        \"application\": {\n          \"this\": {}\n        },\n        \"organization\": {\n          \"this\": {}\n        },\n        \"department\": {\n          \"this\": {}\n        },\n        \"team\": {\n          \"this\": {}\n        },\n        \"viewer\": {\n          \"union\": {\n            \"child\": [\n              {\n                \"this\": {}\n              },\n              {\n                \"tupleToUserset\": {\n                  \"tupleset\": {\n                    \"relation\": \"team\"\n                  },\n                  \"computedUserset\": {\n                    \"relation\": \"member\"\n                  }\n                }\n              },\n              {\n                \"tupleToUserset\": {\n                  \"tupleset\": {\n                    \"relation\": \"department\"\n                  },\n                  \"computedUserset\": {\n                    \"relation\": \"member\"\n                  }\n                }\n              },\n              {\n                \"tupleToUserset\": {\n                  \"tupleset\": {\n                    \"relation\": \"organization\"\n                  },\n                  \"computedUserset\": {\n                    \"relation\": \"member\"\n                  }\n                }\n              }\n            ]\n          }\n        },\n        \"editor\": {\n          \"union\": {\n            \"child\": [\n              {\n                \"this\": {}\n              },\n              {\n                \"tupleToUserset\": {\n                  \"tupleset\": {\n                    \"relation\": \"team\"\n                  },\n                  \"computedUserset\": {\n                    \"relation\": \"member\"\n                  }\n                }\n              },\n              {\n                \"tupleToUserset\": {\n                  \"tupleset\": {\n                    \"relation\": \"department\"\n                  },\n                  \"computedUserset\": {\n                    \"relation\": \"member\"\n                  }\n                }\n              },\n              {\n                \"tupleToUserset\": {\n                  \"tupleset\": {\n                    \"relation\": \"organization\"\n                  },\n                  \"computedUserset\": {\n                    \"relation\": \"admin\"\n                  }\n                }\n              }\n            ]\n          }\n        },\n        \"admin\": {\n          \"union\": {\n            \"child\": [\n              {\n                \"this\": {}\n              },\n              {\n                \"tupleToUserset\": {\n                  \"tupleset\": {\n                    \"relation\": \"organization\"\n                  },\n                  \"computedUserset\": {\n                    \"relation\": \"admin\"\n                  }\n                }\n              }\n            ]\n          }\n        },\n        \"can_read\": {\n          \"union\": {\n            \"child\": [\n              {\n                \"computedUserset\": {\n                  \"relation\": \"viewer\"\n                }\n              },\n              {\n                \"computedUserset\": {\n                  \"relation\": \"editor\"\n                }\n              },\n              {\n                \"computedUserset\": {\n                  \"relation\": \"admin\"\n                }\n              }\n            ]\n          }\n        },\n        \"can_write\": {\n          \"union\": {\n            \"child\": [\n              {\n                \"computedUserset\": {\n                  \"relation\": \"editor\"\n                }\n              },\n              {\n                \"computedUserset\": {\n                  \"relation\": \"admin\"\n                }\n              }\n            ]\n          }\n        },\n        \"can_admin\": {\n          \"computedUserset\": {\n            \"relation\": \"admin\"\n          }\n        }\n      },\n      \"metadata\": {\n        \"relations\": {\n          \"application\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"application\"\n              }\n            ]\n          },\n          \"organization\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"organization\"\n              }\n            ]\n          },\n          \"department\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"department\"\n              }\n            ]\n          },\n          \"team\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"team\"\n              }\n            ]\n          },\n          \"viewer\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"user\"\n              },\n              {\n                \"type\": \"role\",\n                \"relation\": \"member\"\n              }\n            ]\n          },\n          \"editor\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"user\"\n              },\n              {\n                \"type\": \"role\",\n                \"relation\": \"member\"\n              }\n            ]\n          },\n          \"admin\": {\n            \"directly_related_user_types\": [\n              {\n                \"type\": \"user\"\n              },\n              {\n                \"type\": \"role\",\n                \"relation\": \"member\"\n              }\n            ]\n          },\n          \"can_read\": {\n            \"directly_related_user_types\": []\n          },\n          \"can_write\": {\n            \"directly_related_user_types\": []\n          },\n          \"can_admin\": {\n            \"directly_related_user_types\": []\n          }\n        }\n      }\n    }\n  ]\n}"
+                },
+                "url": {
+                  "raw": "{{poc-c-baseUrl}}/stores/{{c-storeId}}/authorization-models",
+                  "host": [
+                    "{{poc-c-baseUrl}}"
+                  ],
+                  "path": [
+                    "stores",
+                    "{{c-storeId}}",
+                    "authorization-models"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Openfga-Store-Id",
+                  "value": "01M06PRS41V8PDB99CARJQ4YG4"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "X-Http-Code",
+                  "value": "201"
+                },
+                {
+                  "key": "X-Request-Id",
+                  "value": "ac160a1d-df12-47c7-85ed-dc5c5ebe2f1e"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 17 Aug 2026 01:53:48 GMT"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "55"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"authorization_model_id\": \"01M06PSJ16K8SFY1A5CV6PXPQE\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "05 - OpenFGA Baseline Check",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('2xx',()=>pm.expect(pm.response.code).to.be.within(200,299));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"authorization_model_id\": \"{{c-modelId}}\",\n  \"tuple_key\": {\n    \"user\": \"user:user-0000000\",\n    \"relation\": \"can_read\",\n    \"object\": \"resource:resource-00000000\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{poc-c-baseUrl}}/stores/{{c-storeId}}/check",
+              "host": [
+                "{{poc-c-baseUrl}}"
+              ],
+              "path": [
+                "stores",
+                "{{c-storeId}}",
+                "check"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "05 - OpenFGA Baseline Check",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"authorization_model_id\": \"{{c-modelId}}\",\n  \"tuple_key\": {\n    \"user\": \"user:user-0000000\",\n    \"relation\": \"can_read\",\n    \"object\": \"resource:resource-00000000\"\n  }\n}"
+                },
+                "url": {
+                  "raw": "{{poc-c-baseUrl}}/stores/{{c-storeId}}/check",
+                  "host": [
+                    "{{poc-c-baseUrl}}"
+                  ],
+                  "path": [
+                    "stores",
+                    "{{c-storeId}}",
+                    "check"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Openfga-Authorization-Model-Id",
+                  "value": "01M06PSJ16K8SFY1A5CV6PXPQE"
+                },
+                {
+                  "key": "Openfga-Store-Id",
+                  "value": "01M06PRS41V8PDB99CARJQ4YG4"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "X-Request-Id",
+                  "value": "92f3e6b1-8088-4dac-beaa-160067ba6846"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 18 Aug 2026 16:56:13 GMT"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "32"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"allowed\": true,\n    \"resolution\": \"\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "06 - OPA Direct Decision",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"input\": {\n    \"relationship_allowed\": true,\n    \"action\": \"read\",\n    \"subject\": {\n      \"department\": \"dept-00662\",\n      \"team\": \"team-01606\",\n      \"organization\": \"org-0031\",\n      \"role\": \"developer\",\n      \"clearance\": 3,\n      \"location\": \"HYDERABAD\",\n      \"event_zone\": \"ZONE-A\"\n    },\n    \"resource\": {\n      \"department\": \"dept-00146\",\n      \"organization\": \"org-0011\",\n      \"team\": \"team-00971\",\n      \"application\": \"app-00374\",\n      \"type\": \"feature\",\n      \"classification\": 2,\n      \"allowed_location\": null,\n      \"event_zone\": \"ZONE-C\"\n    },\n    \"context\": {\n      \"location\": \"HYDERABAD\",\n      \"event_zone\": \"ZONE-A\"\n    }\n  }\n}"
+            },
+            "url": {
+              "raw": "{{opaBaseUrl}}/v1/data/hybrid/authz/decision",
+              "host": [
+                "{{opaBaseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "data",
+                "hybrid",
+                "authz",
+                "decision"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "06 - OPA Direct Decision",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": {\n    \"relationship_allowed\": true,\n    \"action\": \"read\",\n    \"subject\": {\n      \"department\": \"dept-00662\",\n      \"team\": \"team-01606\",\n      \"organization\": \"org-0031\",\n      \"role\": \"developer\",\n      \"clearance\": 3,\n      \"location\": \"HYDERABAD\",\n      \"event_zone\": \"ZONE-A\"\n    },\n    \"resource\": {\n      \"department\": \"dept-00146\",\n      \"organization\": \"org-0011\",\n      \"team\": \"team-00971\",\n      \"application\": \"app-00374\",\n      \"type\": \"feature\",\n      \"classification\": 2,\n      \"allowed_location\": null,\n      \"event_zone\": \"ZONE-C\"\n    },\n    \"context\": {\n      \"location\": \"HYDERABAD\",\n      \"event_zone\": \"ZONE-A\"\n    }\n  }\n}"
+                },
+                "url": {
+                  "raw": "{{opaBaseUrl}}/v1/data/hybrid/authz/decision",
+                  "host": [
+                    "{{opaBaseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "data",
+                    "hybrid",
+                    "authz",
+                    "decision"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 18 Aug 2026 16:58:48 GMT"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "120"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"result\": {\n        \"attribute_allowed\": false,\n        \"decision\": \"DENY\",\n        \"reason\": \"attribute_policy_denied\",\n        \"relationship_allowed\": true\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "07 - Hybrid Authorization",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subject_id\": \"user-0000000\",\n  \"resource_id\": \"resource-00000000\",\n  \"action\": \"read\",\n  \"store_id\": \"{{c-storeId}}\",\n  \"model_id\": \"{{c-modelId}}\",\n  \"context\": {\n    \"location\": \"BENGALURU\",\n    \"event_zone\": \"ZONE-A\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{gatewayBaseUrl}}/authorize",
+              "host": [
+                "{{gatewayBaseUrl}}"
+              ],
+              "path": [
+                "authorize"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "07 - Hybrid Authorization",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subject_id\": \"user-0000000\",\n  \"resource_id\": \"resource-00000000\",\n  \"action\": \"read\",\n  \"store_id\": \"{{c-storeId}}\",\n  \"model_id\": \"{{c-modelId}}\",\n  \"context\": {\n    \"location\": \"BENGALURU\",\n    \"event_zone\": \"ZONE-A\"\n  }\n}"
+                },
+                "url": {
+                  "raw": "{{gatewayBaseUrl}}/authorize",
+                  "host": [
+                    "{{gatewayBaseUrl}}"
+                  ],
+                  "path": [
+                    "authorize"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "date",
+                  "value": "Tue, 18 Aug 2026 16:59:20 GMT"
+                },
+                {
+                  "key": "server",
+                  "value": "uvicorn"
+                },
+                {
+                  "key": "content-length",
+                  "value": "372"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"decision\": {\n        \"attribute_allowed\": false,\n        \"decision\": \"DENY\",\n        \"reason\": \"attribute_policy_denied\",\n        \"relationship_allowed\": true\n    },\n    \"relationship_check\": {\n        \"allowed\": true,\n        \"resolution\": \"\"\n    },\n    \"policy_decision\": {\n        \"attribute_allowed\": false,\n        \"decision\": \"DENY\",\n        \"reason\": \"attribute_policy_denied\",\n        \"relationship_allowed\": true\n    },\n    \"timings_ms\": {\n        \"openfga\": 40.6594,\n        \"opa\": 2.3389,\n        \"gateway_total\": 42.9984\n    }\n}"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
